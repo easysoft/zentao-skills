@@ -1,0 +1,1810 @@
+{
+	"info": {
+		"_postman_id": "eb7713d4-a5a3-42e1-b450-88b065a35d92",
+		"name": "api2.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "登录V2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"account\": \"admin\", \"password\": \"123Qwe!@#\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/users/login"
+			},
+			"response": []
+		},
+		{
+			"name": "获取文件详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/files/1"
+			},
+			"response": []
+		},
+		{
+			"name": "创建文件",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "ZAI.png"
+						},
+						{
+							"key": "objectType",
+							"value": "bug",
+							"type": "text"
+						},
+						{
+							"key": "objectID",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{domain}}/api.php/v2/files"
+			},
+			"response": []
+		},
+		{
+			"name": "删除文件",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/files/1"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑文件",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fileName\": \"aaxxa\",\r\n    \"extension\": \"x\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/files/6"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目集列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/programs"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目集的项目列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/programs/1/projects"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目集的产品列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/programs/1/products"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目集详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/programs/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{domain}}/api.php/v2/projects?browseType=doing",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"api.php",
+						"v2",
+						"projects"
+					],
+					"query": [
+						{
+							"key": "browseType",
+							"value": "doing"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取需求列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/stories"
+			},
+			"response": []
+		},
+		{
+			"name": "关闭需求",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"closedReason\": \"done\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/stories/1/close"
+			},
+			"response": []
+		},
+		{
+			"name": "关闭用户需求",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"closedReason\": \"done\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/requirements/1/close"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑用户需求",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"aa1\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/requirements/7"
+			},
+			"response": []
+		},
+		{
+			"name": "创建需求",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productID\": 1,\r\n    \"execution\": 3,\r\n    \"title\": \"aaa\",\r\n    \"assignedTo\": \"admin\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/stories"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑需求",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productID\": 1,\r\n    \"execution\": 3,\r\n    \"title\": \"\",\r\n    \"assignedTo\": \"admin\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/stories/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目需求列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/stories"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行需求列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/1/stories"
+			},
+			"response": []
+		},
+		{
+			"name": "获取需求详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/stories/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取业务需求详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/epics/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品计划列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/productplans"
+			},
+			"response": []
+		},
+		{
+			"name": "创建产品计划",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"productID\": 1, \"title\": \"aaa\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/productplans"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑产品计划",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/productplans"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品计划详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/productplans/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品发布列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/releases"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目发布列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/1/releases"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品发布详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/releases/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/executions"
+			},
+			"response": []
+		},
+		{
+			"name": "删除执行",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/3"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行详情 Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/3"
+			},
+			"response": []
+		},
+		{
+			"name": "获取任务列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/3/tasks"
+			},
+			"response": []
+		},
+		{
+			"name": "获取任务详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/tasks/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取任务详情 Copy",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": "{{domain}}/api.php/v2/tasks/1/close"
+			},
+			"response": []
+		},
+		{
+			"name": "获取build列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/1/builds"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行build列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/1/builds"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目build列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/builds"
+			},
+			"response": []
+		},
+		{
+			"name": "获取build详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/builds/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品bug列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/bugs"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目bug列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/bugs"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行bug列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/1/bugs"
+			},
+			"response": []
+		},
+		{
+			"name": "获取bug详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/bugs/1"
+			},
+			"response": []
+		},
+		{
+			"name": "解决bug",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/bugs/1/resolve"
+			},
+			"response": []
+		},
+		{
+			"name": "修改bug",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"\\u5149\\u654f\\u5143\\u4ef6\\u663e\\u793a\\u9519\\u8bef\",\r\n    \"severity\": 3,\r\n    \"pri\": 3,\r\n    \"type\": \"codeerror\",\r\n    \"openedBuild\": [\r\n        \"trunk\"\r\n    ],\r\n    \"steps\": \"aaa[\\u6b65\\u9aa4]<\\/p><\\/p>[\\u7ed3\\u679c]<\\/p><\\/p>[\\u671f\\u671b]<\\/p>\",\r\n    \"project\": 2,\r\n    \"execution\": 3,\r\n    \"story\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/bugs/1"
+			},
+			"response": []
+		},
+		{
+			"name": "创建bug",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productID\": 1,\r\n    \"title\": \"q\",\r\n    \"openedBuild\": [\"trunk\"],\r\n    \"project\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/bugs"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品用例列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/testcases"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目用例列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/1/testcases"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行用例列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/3/testcases"
+			},
+			"response": []
+		},
+		{
+			"name": "获取用例详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/testcases/1"
+			},
+			"response": []
+		},
+		{
+			"name": "创建用例",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productID\": 1,\r\n    \"title\": \"aa\",\r\n    \"module\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/testcases"
+			},
+			"response": []
+		},
+		{
+			"name": "修改用例",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"module\": 116\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/testcases/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品测试任务列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/testtasks"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目测试任务列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/testtasks"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行测试任务列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/3/testtasks"
+			},
+			"response": []
+		},
+		{
+			"name": "获取测试任务详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/testtasks/1"
+			},
+			"response": []
+		},
+		{
+			"name": "创建测试任务",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productID\": 1,\r\n    \"name\": \"a\",\r\n    \"build\": 1,\r\n    \"execution\": 3,\r\n    \"type\": \"integrate\",\r\n    \"owner\": \"admin\",\r\n    \"begin\": \"2026-01-01\",\r\n    \"end\": \"2026-02-01\"\r\n}"
+				},
+				"url": "{{domain}}/api.php/v2/testtasks"
+			},
+			"response": []
+		},
+		{
+			"name": "获取产品测试报告列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/products/1/testreports"
+			},
+			"response": []
+		},
+		{
+			"name": "获取项目测试报告列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/projects/2/testreports"
+			},
+			"response": []
+		},
+		{
+			"name": "获取执行测试报告列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/executions/1/testreports"
+			},
+			"response": []
+		},
+		{
+			"name": "获取测试报告详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/testreports/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取部门列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/depts"
+			},
+			"response": []
+		},
+		{
+			"name": "获取部门详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/depts/1"
+			},
+			"response": []
+		},
+		{
+			"name": "获取用户列表",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disableCookies": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/users"
+			},
+			"response": []
+		},
+		{
+			"name": "获取用户详情",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑用户",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"realname\": \"用户2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "删除用户",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{domain}}/api.php/v2/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "开始项目",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"realBegan\":\"2025-09-08\",\r\n    \"comment\": \"test1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/projects/10/start"
+			},
+			"response": []
+		},
+		{
+			"name": "创建产品",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test1\",\r\n    \"type\": \"normal\",\r\n    \"PO\": \"admin\",\r\n    \"acl\": \"private\",\r\n    \"whitelist\": [\"admin\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/products"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑产品",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test13\",\r\n    \"type\": \"normal\",\r\n    \"acl\": \"open\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/products/1"
+			},
+			"response": []
+		},
+		{
+			"name": "删除产品",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test11\",\r\n    \"type\": \"normal\",\r\n    \"PO\": \"admin\",\r\n    \"acl\": \"private\",\r\n    \"whitelist\": [\"admin\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/products/13"
+			},
+			"response": []
+		},
+		{
+			"name": "编辑项目",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"ddddd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/projects/1"
+			},
+			"response": []
+		},
+		{
+			"name": "创建项目",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"program\": 1,\r\n    \"name\": \"ppp1\",\r\n    \"begin\": \"2025-10-01\",\r\n    \"end\": \"2025-11-11\",\r\n    \"products\": [10000]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/projects"
+			},
+			"response": []
+		},
+		{
+			"name": "创建瀑布项目",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"program\": 1,\r\n    \"name\": \"fff\",\r\n    \"begin\": \"2025-10-01\",\r\n    \"end\": \"2025-11-11\",\r\n    \"model\": \"waterfull\",\r\n    \"products\": [1]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/projects"
+			},
+			"response": []
+		},
+		{
+			"name": "创建任务",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"executionID\": 7,\r\n    \"name\": \"test77\",\r\n    \"type\": \"normal\",\r\n    \"PO\": \"admin\",\r\n    \"acl\": \"private\",\r\n    \"whitelist\": [\"admin\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/tasks"
+			},
+			"response": []
+		},
+		{
+			"name": "激活任务",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"left\": 10,\r\n    \"assignedTo\": \"user1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/tasks/1/activate"
+			},
+			"response": []
+		},
+		{
+			"name": "完成任务",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentConsumed\": 1,\r\n    \"assignedTo\": \"admin\",\r\n    \"consumed\": 2,\r\n    \"finishedDate\": \"2026-01-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/tasks/1/finish"
+			},
+			"response": []
+		},
+		{
+			"name": "删除任务",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"left\": 10,\r\n    \"assignedTo\": \"user1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/tasks/2"
+			},
+			"response": []
+		},
+		{
+			"name": "创建Bug",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"aaa\",\r\n    \"productID\": 1,\r\n    \"openedBuild\": [\"trunk\"],\r\n    \"acl\": \"private\",\r\n    \"whitelist\": [\"admin\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/api.php/v2/bugs"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "bd3t9erff54q8grl3lvlovg99e"
+		},
+		{
+			"key": "domain",
+			"value": "http://zentaodev.axb.oop.cc"
+		}
+	]
+}
