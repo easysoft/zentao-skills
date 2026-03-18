@@ -20,6 +20,8 @@
     执行命令 `clawdhub install zentao-skills` 安装禅道 Skills
     ```
 
+    另一种方式是手动将 `skills` 目录合并到 `~/.openclaw/workspace/skills` 目录。
+
 2. 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
 3. 在对话中直接提出你的需求，例如：
 
