@@ -14,10 +14,10 @@
 
 下面以 🦀 **OpenClaw** 为例：
 
-1. 在终端执行 `clawdhub install zentao-skills`，或者将如下内容发送给 OpenClaw 会话：
+1. 在终端执行 `npx clawhub@latest install zentao-api`，或者将如下内容发送给 OpenClaw 会话：
 
     ```txt
-    执行命令 `clawdhub install zentao-skills` 安装禅道 Skills
+    执行命令 `npx clawhub@latest install zentao-api` 安装禅道 API Skill
     ```
 
     另一种方式是手动将 `skills` 目录合并到 `~/.openclaw/workspace/skills` 目录。
