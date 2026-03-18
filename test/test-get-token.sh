@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # 测试 get-token.sh 的各种场景
-# 用法：bash test-get-token.sh
+# 用法：bash test/test-get-token.sh
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPT="$SCRIPT_DIR/get-token.sh"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT="$REPO_DIR/skills/zentao-api/scripts/get-token.sh"
 
 # 使用临时目录隔离测试，避免污染真实的 ~/.zentao-token.json
 TEMP_DIR=$(mktemp -d)
@@ -39,13 +39,13 @@ MOCK
   chmod +x "$MOCK_BIN/curl"
 }
 
-# 写入测试用缓存（token + url，无 TTL）
+# 写入测试用缓存（token + url + account）
 write_cache() {
-  local token="$1" url="$2"
+  local token="$1" url="$2" account="$3"
   node -e "
     const fs = require('fs');
     fs.writeFileSync('$FAKE_HOME/.zentao-token.json',
-      JSON.stringify({ token: '$token', url: '$url' }));
+      JSON.stringify({ token: '$token', url: '$url', account: '$account' }));
   "
 }
 
@@ -67,10 +67,11 @@ else
   fail "应返回 direct_token_value，实际：$OUTPUT"
 fi
 
-# ── Test 2: 缺少环境变量 ──────────────────────
+# ── Test 2: 缺少所有环境变量且无缓存 ──────────
 echo ""
-echo "[2] 缺少环境变量"
+echo "[2] 缺少环境变量且无缓存"
 unset ZENTAO_URL ZENTAO_ACCOUNT ZENTAO_PASSWORD 2>/dev/null || true
+rm -f "$FAKE_HOME/.zentao-token.json"
 OUTPUT=$(HOME="$FAKE_HOME" PATH="$MOCK_BIN:$PATH" bash "$SCRIPT" 2>&1 || true)
 if echo "$OUTPUT" | grep -q "请先设置环境变量"; then
   pass "打印错误提示并退出"
@@ -78,17 +79,31 @@ else
   fail "应提示设置环境变量，实际输出：$OUTPUT"
 fi
 
-# 后续测试均使用固定环境变量
+# ── Test 3: 从缓存自动补全 URL 和 account ─────
+echo ""
+echo "[3] 从缓存自动补全 ZENTAO_URL 和 ZENTAO_ACCOUNT"
+unset ZENTAO_URL ZENTAO_ACCOUNT 2>/dev/null || true
+export ZENTAO_PASSWORD="password"
+rm -f "$FAKE_HOME/.zentao-token.json"
+write_cache "auto_filled_token" "http://zentao.test" "admin"
+mock_curl '{"unexpected": "curl_was_called"}'
+OUTPUT=$(HOME="$FAKE_HOME" PATH="$MOCK_BIN:$PATH" bash "$SCRIPT" 2>&1)
+if [[ "$OUTPUT" == "auto_filled_token" ]]; then
+  pass "URL 和 account 从缓存自动补全，直接返回缓存 token"
+else
+  fail "应返回 auto_filled_token，实际：$OUTPUT"
+fi
+
+# 后续测试设置固定环境变量
 export ZENTAO_URL="http://zentao.test"
 export ZENTAO_ACCOUNT="admin"
 export ZENTAO_PASSWORD="password"
 
-# ── Test 2: 命中有效缓存，不调用登录接口 ──────
+# ── Test 4: 缓存命中（URL + account 均匹配）──
 echo ""
-echo "[3] 缓存命中"
+echo "[4] 缓存命中"
 rm -f "$FAKE_HOME/.zentao-token.json"
-write_cache "cached_token_abc" "http://zentao.test"
-# 若 curl 被意外调用则返回无 token 的响应，导致输出不匹配
+write_cache "cached_token_abc" "http://zentao.test" "admin"
 mock_curl '{"unexpected": "curl_was_called"}'
 OUTPUT=$(run_script 2>&1)
 if [[ "$OUTPUT" == "cached_token_abc" ]]; then
@@ -97,11 +112,11 @@ else
   fail "应返回 cached_token_abc，实际：$OUTPUT"
 fi
 
-# ── Test 3: 缓存 URL 不匹配，重新登录 ─────────
+# ── Test 5: 缓存 URL 不匹配，重新登录 ─────────
 echo ""
-echo "[4] 缓存 URL 不匹配"
+echo "[5] 缓存 URL 不匹配"
 rm -f "$FAKE_HOME/.zentao-token.json"
-write_cache "other_server_token" "http://other-server.test"
+write_cache "other_server_token" "http://other-server.test" "admin"
 mock_curl '{"data": {"token": "new_server_token"}}'
 OUTPUT=$(run_script 2>&1)
 if [[ "$OUTPUT" == "new_server_token" ]]; then
@@ -110,9 +125,22 @@ else
   fail "应返回 new_server_token，实际：$OUTPUT"
 fi
 
-# ── Test 4: 缓存文件 JSON 损坏，降级重新登录 ──
+# ── Test 6: 缓存 account 不匹配，重新登录 ─────
 echo ""
-echo "[5] 缓存 JSON 损坏"
+echo "[6] 缓存账号不匹配"
+rm -f "$FAKE_HOME/.zentao-token.json"
+write_cache "other_user_token" "http://zentao.test" "other_user"
+mock_curl '{"data": {"token": "new_account_token"}}'
+OUTPUT=$(run_script 2>&1)
+if [[ "$OUTPUT" == "new_account_token" ]]; then
+  pass "账号不匹配时重新登录"
+else
+  fail "应返回 new_account_token，实际：$OUTPUT"
+fi
+
+# ── Test 7: 缓存文件 JSON 损坏，降级重新登录 ──
+echo ""
+echo "[7] 缓存 JSON 损坏"
 echo "not valid json {{{" > "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"data": {"token": "recovered_token"}}'
 OUTPUT=$(run_script 2>&1)
@@ -122,9 +150,9 @@ else
   fail "应返回 recovered_token，实际：$OUTPUT"
 fi
 
-# ── Test 5: 登录响应含顶层 token 字段 ─────────
+# ── Test 8: 登录响应含顶层 token 字段 ─────────
 echo ""
-echo "[6] 登录响应：顶层 token 字段"
+echo "[8] 登录响应：顶层 token 字段"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"token": "toplevel_token"}'
 OUTPUT=$(run_script 2>&1)
@@ -134,9 +162,9 @@ else
   fail "应返回 toplevel_token，实际：$OUTPUT"
 fi
 
-# ── Test 6: 登录响应含 data.token 字段 ────────
+# ── Test 9: 登录响应含 data.token 字段 ────────
 echo ""
-echo "[7] 登录响应：data.token 字段"
+echo "[9] 登录响应：data.token 字段"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"data": {"token": "nested_token"}}'
 OUTPUT=$(run_script 2>&1)
@@ -146,9 +174,9 @@ else
   fail "应返回 nested_token，实际：$OUTPUT"
 fi
 
-# ── Test 7: 登录失败（响应无 token）─────────────
+# ── Test 10: 登录失败（响应无 token）──────────
 echo ""
-echo "[8] 登录失败（无 token）"
+echo "[10] 登录失败（无 token）"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"error": "invalid credentials"}'
 OUTPUT=$(run_script 2>&1 || true)
@@ -159,9 +187,9 @@ else
   fail "应打印登录失败且退出码非零；output=$OUTPUT exit=$EXIT_CODE"
 fi
 
-# ── Test 8: 登录返回非 JSON ────────────────────
+# ── Test 11: 登录返回非 JSON ───────────────────
 echo ""
-echo "[9] 登录返回非 JSON"
+echo "[11] 登录返回非 JSON"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl 'not json at all'
 OUTPUT=$(run_script 2>&1 || true)
@@ -172,31 +200,32 @@ else
   fail "应打印解析错误且退出码非零；output=$OUTPUT exit=$EXIT_CODE"
 fi
 
-# ── Test 9: 登录成功后写入缓存 ───────────────
+# ── Test 12: 登录成功后写入 token、url、account ─
 echo ""
-echo "[10] 登录后写入缓存"
+echo "[12] 登录后写入缓存（含 url 和 account）"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"data": {"token": "written_token"}}'
 run_script > /dev/null 2>&1 || true
 if [[ -f "$FAKE_HOME/.zentao-token.json" ]]; then
-  CACHED=$(node -e "const d=JSON.parse(require('fs').readFileSync('$FAKE_HOME/.zentao-token.json','utf8')); process.stdout.write(d.token)")
-  if [[ "$CACHED" == "written_token" ]]; then
-    pass "token 已正确写入缓存文件"
+  CACHE_TOKEN=$(node -e "const d=JSON.parse(require('fs').readFileSync('$FAKE_HOME/.zentao-token.json','utf8')); process.stdout.write(d.token)")
+  CACHE_URL=$(node -e "const d=JSON.parse(require('fs').readFileSync('$FAKE_HOME/.zentao-token.json','utf8')); process.stdout.write(d.url)")
+  CACHE_ACCOUNT=$(node -e "const d=JSON.parse(require('fs').readFileSync('$FAKE_HOME/.zentao-token.json','utf8')); process.stdout.write(d.account)")
+  if [[ "$CACHE_TOKEN" == "written_token" && "$CACHE_URL" == "http://zentao.test" && "$CACHE_ACCOUNT" == "admin" ]]; then
+    pass "token、url、account 均已正确写入缓存"
   else
-    fail "缓存文件存在但 token 不匹配：$CACHED"
+    fail "缓存内容不匹配：token=$CACHE_TOKEN url=$CACHE_URL account=$CACHE_ACCOUNT"
   fi
 else
   fail "登录成功后应创建缓存文件"
 fi
 
-# ── Test 10: 连续两次调用，第二次命中缓存 ─────
+# ── Test 13: 连续两次调用，第二次命中缓存 ─────
 echo ""
-echo "[11] 连续调用：第二次命中缓存"
+echo "[13] 连续调用：第二次命中缓存"
 rm -f "$FAKE_HOME/.zentao-token.json"
 mock_curl '{"data": {"token": "first_login_token"}}'
 FIRST=$(run_script 2>&1)
 
-# 替换 curl 为会报错的版本，确认第二次不调用
 mock_curl 'SHOULD_NOT_CALL'
 SECOND=$(run_script 2>&1)
 
