@@ -48,6 +48,12 @@ if [[ -n "${ZENTAO_TOKEN:-}" ]]; then
     echo "错误：设置了 ZENTAO_TOKEN 但缺少 ZENTAO_URL，请同时提供服务器地址。" >&2
     exit 1
   fi
+  # 写入缓存，方便下次无需环境变量直接使用
+  node - "$CACHE_FILE" "${ZENTAO_TOKEN}" "${ZENTAO_URL}" "${ZENTAO_ACCOUNT:-}" <<'JSEOF'
+const [,, cachePath, token, url, account] = process.argv;
+const fs = require('fs');
+fs.writeFileSync(cachePath, JSON.stringify({ token, url, account }, null, 2));
+JSEOF
   output_and_exit "${ZENTAO_URL}" "${ZENTAO_TOKEN}" "${ZENTAO_ACCOUNT:-}"
 fi
 

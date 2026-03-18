@@ -205,6 +205,26 @@ else
   fail "应返回 env_token_value / http://zentao.test（exit=0），实际：$OUTPUT（exit=$EXIT_CODE）"
 fi
 
+# ── Test 7b: ZENTAO_TOKEN 路径写入缓存 ──────────────
+echo ""
+echo "[7b] ZENTAO_TOKEN 路径：成功后写入缓存"
+reset_env
+rm -f "$FAKE_HOME/.zentao-token.json"
+EXIT_CODE=0
+OUTPUT=$(ZENTAO_TOKEN="env_token_value" ZENTAO_URL="http://zentao.test" ZENTAO_ACCOUNT="admin" \
+  HOME="$FAKE_HOME" PATH="$MOCK_BIN:$PATH" bash "$SCRIPT" 2>&1) || EXIT_CODE=$?
+if [[ -f "$FAKE_HOME/.zentao-token.json" ]]; then
+  mapfile -t _fields < <(read_cache)
+  _ct="${_fields[0]:-}" _cu="${_fields[1]:-}" _ca="${_fields[2]:-}"
+  if [[ "$_ct" == "env_token_value" && "$_cu" == "http://zentao.test" && "$_ca" == "admin" ]]; then
+    pass "ZENTAO_TOKEN 路径写入缓存，下次无需环境变量"
+  else
+    fail "缓存内容不匹配：token=$_ct url=$_cu account=$_ca"
+  fi
+else
+  fail "ZENTAO_TOKEN 路径应创建缓存文件"
+fi
+
 # ── Test 8: 缓存优先于 ZENTAO_TOKEN ─────────────────
 echo ""
 echo "[8] 缓存 token 优先于 ZENTAO_TOKEN 环境变量"
