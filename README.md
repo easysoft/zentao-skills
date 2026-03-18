@@ -37,7 +37,7 @@
 <details>
   <summary>Cursor</summary>
   <ol>
-    <li>将 `skills` 合并 `～/.cursor/skills` 目录</li>
+    <li>将 `skills` 目录合并到 `～/.cursor/skills`</li>
     <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
     <li>在对话中直接提出你的需求，例如：</li>
     <ul>
@@ -50,7 +50,7 @@
 <details>
   <summary>Claude</summary>
   <ol>
-    <li>将 `skills` 合并 `～/.claude/skills` 目录</li>
+    <li>将 `skills` 目录合并到 `～/.claude/skills`</li>
     <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
     <li>在对话中直接提出你的需求，例如：</li>
     <ul>
