@@ -2,6 +2,9 @@
 
 基础路径：`{ZENTAO_URL}/api.php/v2`
 认证方式：所有接口（除登录外）需在 Header 携带 `token: <token值>`
+写操作需额外携带 `Content-Type: application/json`
+
+**字段标注说明**：**粗体** = 必填，普通 = 可选
 
 ---
 
@@ -11,8 +14,8 @@
 |------|------|------|
 | POST | `/users/login` | 登录获取 token |
 
-请求：`{"account":"admin","password":"xxx"}`
-响应：`{"status":"success","token":"llb8ocefb0kbgklif53j839k6l"}`
+请求体：**account**(string), **password**(string)
+响应：`{"status":"success","token":"..."}`
 
 ---
 
@@ -26,7 +29,11 @@
 | PUT | `/users/{userID}` | 修改用户信息 |
 | DELETE | `/users/{userID}` | 删除用户 |
 
-常用字段：`account`, `realname`, `type`, `dept`, `gender`, `email`, `mobile`, `role`, `visions`
+**POST 创建**：**account**(string), **realname**(string), **password**(string)
+
+**PUT 修改**：realname, dept(int), join(date), group(string[]), email, visions(string[] rnd|lite), mobile, weixin, password
+
+**GET 列表参数**：browseType(`inside`|`outside`), orderBy(`id`|`realname`|`account`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -42,7 +49,9 @@
 | GET | `/programs/{programID}/products` | 获取项目集的产品列表 |
 | GET | `/programs/{programID}/projects` | 获取项目集的项目列表 |
 
-常用字段：`name`, `parent`, `PM`, `begin`, `end`, `budget`, `budgetUnit`, `desc`, `acl`
+**POST/PUT**：**name**(string), **begin**(date), **end**(date), PM(string), desc(string)
+
+**GET 列表参数**：status(`all`|`unclosed`|`wait`|`doing`|`suspended`|`delayed`|`closed`), orderBy(`id`|`name`|`begin`|`end`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -58,21 +67,23 @@
 
 **产品关联资源列表：**
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/products/{productID}/stories` | 需求列表 |
-| GET | `/products/{productID}/epics` | 业务需求列表 |
-| GET | `/products/{productID}/requirements` | 用户需求列表 |
-| GET | `/products/{productID}/bugs` | Bug 列表 |
-| GET | `/products/{productID}/testcases` | 测试用例列表 |
-| GET | `/products/{productID}/productplans` | 产品计划列表 |
-| GET | `/products/{productID}/releases` | 发布列表 |
-| GET | `/products/{productID}/testtasks` | 测试单列表 |
-| GET | `/products/{productID}/feedbacks` | 反馈列表 |
-| GET | `/products/{productID}/tickets` | 工单列表 |
-| GET | `/products/{productID}/systems` | 应用列表 |
+| GET 路径 | 说明 |
+|---------|------|
+| `/products/{id}/stories` | 需求列表 |
+| `/products/{id}/epics` | 业务需求列表 |
+| `/products/{id}/requirements` | 用户需求列表 |
+| `/products/{id}/bugs` | Bug 列表 |
+| `/products/{id}/testcases` | 测试用例列表 |
+| `/products/{id}/productplans` | 产品计划列表 |
+| `/products/{id}/releases` | 发布列表 |
+| `/products/{id}/testtasks` | 测试单列表 |
+| `/products/{id}/feedbacks` | 反馈列表 |
+| `/products/{id}/tickets` | 工单列表 |
+| `/products/{id}/systems` | 应用列表 |
 
-常用字段：`name`, `program`, `type`(normal), `desc`, `PO`, `QD`, `RD`, `acl`(open/private)
+**POST/PUT**：**name**(string), program(int), line(int), type(`normal`|`branch`|`platform`), PO(string), reviewer(string[]), desc(string[]), QD(string), RD(string), acl(`open`|`private`)
+
+**GET 列表参数**：browseType(`all`|`noclosed`|`closed`), orderBy(`id`|`title`|`begin`|`end`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -85,22 +96,24 @@
 | PUT | `/projects/{projectID}` | 修改项目 |
 | DELETE | `/projects/{projectID}` | 删除项目 |
 
-查询参数：`browseType=all|doing|closed`
-
 **项目关联资源列表：**
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/projects/{projectID}/executions` | 执行列表 |
-| GET | `/projects/{projectID}/stories` | 需求列表 |
-| GET | `/projects/{projectID}/bugs` | Bug 列表 |
-| GET | `/projects/{projectID}/testcases` | 测试用例列表 |
-| GET | `/projects/{projectID}/builds` | 版本列表 |
-| GET | `/projects/{projectID}/testtasks` | 测试单列表 |
+| GET 路径 | 说明 |
+|---------|------|
+| `/projects/{id}/executions` | 执行列表 |
+| `/projects/{id}/stories` | 需求列表 |
+| `/projects/{id}/bugs` | Bug 列表 |
+| `/projects/{id}/testcases` | 测试用例列表 |
+| `/projects/{id}/builds` | 版本列表 |
+| `/projects/{id}/testtasks` | 测试单列表 |
 
-常用字段：`name`, `parent`, `model`(scrum/waterfall), `begin`, `end`, `budget`, `PM`, `desc`, `acl`, `products`(数组)
+**POST/PUT**：**name**(string), **model**(`scrum`|`waterfall`|`kanban`|`agileplus`|`waterfallplus`), **begin**(date), **end**(date), **workflowGroup**(int, 付费版功能开源版可不填), products(string[]), parent(int), PM(string)
 
-> 注意：OpenAPI 规范中无 `GET /projects/{projectID}` 项目详情接口
+**GET /projects 参数**：browseType(`all`|`undone`|`wait`|`doing`，默认`undone`), orderBy(`id`|`name`|`begin`|`end`+`_asc/_desc`), recPerPage, pageID
+
+**GET /programs/{id}/projects 参数**：同上
+
+**GET /projects/{id}/executions 参数**：browseType(`all`|`undone`|`wait`|`doing`，默认`undone`), orderBy(`rawID`|`nameCol`|`begin`|`end`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -116,18 +129,20 @@
 
 **执行关联资源列表：**
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/executions/{executionID}/stories` | 需求列表 |
-| GET | `/executions/{executionID}/tasks` | 任务列表 |
-| GET | `/executions/{executionID}/bugs` | Bug 列表 |
-| GET | `/executions/{executionID}/testcases` | 测试用例列表 |
-| GET | `/executions/{executionID}/builds` | 版本列表 |
-| GET | `/executions/{executionID}/testtasks` | 测试单列表 |
+| GET 路径 | 说明 |
+|---------|------|
+| `/executions/{id}/stories` | 需求列表 |
+| `/executions/{id}/tasks` | 任务列表 |
+| `/executions/{id}/bugs` | Bug 列表 |
+| `/executions/{id}/testcases` | 测试用例列表 |
+| `/executions/{id}/builds` | 版本列表 |
+| `/executions/{id}/testtasks` | 测试单列表 |
 
-常用字段：`project`, `name`, `type`(sprint), `begin`, `end`, `days`, `PO`, `PM`, `QD`, `RD`, `desc`, `acl`
+**POST 创建**：**project**(int), **name**(string), **begin**(date), **end**(date), lifetime(`short`|`long`|`ops`), days(int), products(string[]), plans(string[]), PO(string), QD(string), PM(string), RD(string), acl(`open`|`private`)
 
-> 获取进行中的执行：先 `GET /projects?browseType=doing` 再 `GET /projects/{id}/executions`
+**PUT 修改**：同上但 project 变为可选
+
+**GET /executions 参数**：status(`all`|`undone`|`wait`|`doing`，默认`undone`), orderBy(`rawID`|`nameCol`|`begin`|`end`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -145,7 +160,17 @@
 
 列表通过父资源获取：`/products/{id}/stories`, `/projects/{id}/stories`, `/executions/{id}/stories`
 
-常用字段：`product`, `title`, `type`(story), `category`(feature), `pri`, `estimate`, `source`, `spec`(描述), `verify`(验收标准), `assignedTo`, `reviewer`, `module`, `plan`
+**POST 创建**：**productID**(int), **title**(string), pri(int, 默认3), module(int), parent(int), estimate(float), spec(string 需求描述), category(`feature`|`interface`|`performance`|`safe`|`experience`|`improve`|`other`), source(`customer`|`user`|`po`|`market`|`service`|`operation`|`support`|`competitor`|`partner`|`dev`|`tester`|`bug`|`forum`|`other`), verify(string 验收标准), assignedTo(string), reviewer(string[]), project(int), execution(int)
+
+**PUT 修改**：**title**(string)，其余字段可选
+
+**PUT change 变更**：**reviewer**(string[]), title(string), spec(string), verify(string)
+
+**PUT close 关闭**：**closedReason**(`done`|`subdivided`|`duplicate`|`postponed`|`willnotdo`|`cancel`|`bydesign`), comment(string)
+
+**PUT activate 激活**：assignedTo(string), comment(string)
+
+**GET 列表参数**：browseType(`allstory`|`assignedtome`|`openedbyme`|`reviewbyme`|`draftstory`，默认`unclosed`), orderBy(`id`|`title`|`status`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -163,7 +188,9 @@
 
 列表：`/products/{id}/epics`
 
-常用字段：同 Story，`type` 值为 `epic`
+字段结构同 Story，差异：无 project/execution 字段，parent 指父业务需求。
+
+**GET 列表参数**：同 Story
 
 ---
 
@@ -181,7 +208,9 @@
 
 列表：`/products/{id}/requirements`
 
-常用字段：同 Story，`type` 值为 `requirement`
+字段结构同 Story，差异：无 project/execution 字段，change 操作中 reviewer 为可选（非必填）。
+
+**GET 列表参数**：同 Story
 
 ---
 
@@ -199,23 +228,19 @@
 
 列表通过父资源获取：`/products/{id}/bugs`, `/projects/{id}/bugs`, `/executions/{id}/bugs`
 
-常用字段：
+**POST 创建**：**productID**(int), **title**(string), **openedBuild**(string[], 如`["trunk"]`), project(int), execution(int), severity(int, 默认3), pri(int, 默认3), type(`codeerror`|`config`|`install`|`security`|`performance`|`standard`|`automation`|`designdefect`|`others`), steps(string), story(int)
 
-| 字段 | 说明 |
-|------|------|
-| `product` | 所属产品 ID |
-| `title` | Bug 标题 |
-| `severity` | 严重程度 1-4（1 最严重） |
-| `pri` | 优先级 1-4（1 最高） |
-| `type` | 类型：`codeerror`, `config`, `install`, `security`, `performance`, `standard`, `automation`, `designdefect` |
-| `steps` | 重现步骤 |
-| `openedBuild` | 发现版本，如 `"trunk"` |
-| `assignedTo` | 指派用户账号 |
-| `os` | 操作系统 |
-| `browser` | 浏览器 |
-| `deadline` | 截止日期 |
-| `story` | 关联需求 ID |
-| `task` | 关联任务 ID |
+**PUT 修改**：所有字段均为可选
+
+**PUT resolve 解决**：**resolution**(`fixed`|`notrepro`|`bydesign`|`duplicate`|`external`|`postponed`|`willnotfix`|`tostory`), resolvedDate(string), resolvedBuild(string), assignedTo(string), comment(string)
+
+**PUT close 关闭**：comment(string)
+
+**PUT activate 激活**：openedBuild(string[]), assignedTo(string), comment(string)
+
+**GET /products/{id}/bugs 参数**：browseType(`all`|`unclosed`|`assignedtome`|`openedbyme`|`assignedbyme`，默认`unclosed`), orderBy(`id`|`title`|`status`+`_asc/_desc`), recPerPage, pageID
+
+**GET /projects/{id}/bugs 和 /executions/{id}/bugs 参数**：browseType(`all`|`unresolved`，默认`all`), orderBy 同上
 
 ---
 
@@ -234,22 +259,19 @@
 
 列表：`/executions/{id}/tasks`
 
-常用字段：
+**POST 创建**：**name**(string), **executionID**(int), type(string), assignedTo(string), estStarted(date), deadline(date), pri(int), estimate(float), module(int), story(int), desc(string)
 
-| 字段 | 说明 |
-|------|------|
-| `execution` | 所属执行 ID |
-| `name` | 任务名称 |
-| `type` | 类型：`devel`, `test`, `design`, `discuss`, `ui`, `affair`, `misc` |
-| `pri` | 优先级 |
-| `estimate` | 预计工时 |
-| `left` | 剩余工时 |
-| `consumed` | 已消耗工时（完成时填写） |
-| `assignedTo` | 指派用户 |
-| `estStarted` | 预计开始日期 |
-| `deadline` | 截止日期 |
-| `finishedDate` | 完成日期（完成时填写） |
-| `story` | 关联需求 ID |
+**PUT 修改**：所有字段可选
+
+**PUT start 启动**：**realStarted**(date), assignedTo(string), consumed(float), left(float), comment(string)
+
+**PUT finish 完成**：**currentConsumed**(float), **realStarted**(date), **finishedDate**(date), assignedTo(string), consumed(float), comment(string)
+
+**PUT close 关闭**：comment(string)
+
+**PUT activate 激活**：left(float), assignedTo(string), comment(string)
+
+**GET 列表参数**：status(`all`|`unclosed`|`assignedtome`|`myinvolved`|`assignedbyme`，默认`unclosed`), orderBy(`id`|`name`|`status`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -264,7 +286,11 @@
 
 列表通过父资源获取：`/products/{id}/testcases`, `/projects/{id}/testcases`, `/executions/{id}/testcases`
 
-常用字段：`product`, `title`, `type`(feature), `pri`, `precondition`, `stage`, `story`, `module`, `steps`(数组 `{desc, expect, type}`)
+**POST 创建**：**productID**(int), **title**(string), module(int), story(int), pri(int), type(`unit`|`interface`|`feature`|`install`|`config`|`performance`|`security`|`other`), precondition(string), steps(string[]), expects(string[]), stepType(string[] `step`|`group`), project(int), execution(int)
+
+**PUT 修改**：**title**(string)，其余可选（注意：模块字段名为 `moudule`）
+
+**GET 列表参数**：browseType(`all`|`wait`|`needconfirm`，默认`all`), orderBy(`id`|`title`|`status`或`pri`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -279,7 +305,11 @@
 
 列表：`/products/{id}/productplans`
 
-常用字段：`product`, `title`, `begin`, `end`, `desc`
+**POST 创建**：**productID**(int), **title**(string), parent(int), begin(date), end(date), branchID(int), desc(string)
+
+**PUT 修改**：**title**(string)，productID 不再必填，其余可选
+
+**GET 列表参数**：browseType(`all`|`undone`|`wait`|`doing`，默认`undone`), orderBy(`id`|`title`|`begin`|`end`|`status`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -291,9 +321,11 @@
 | PUT | `/builds/{buildID}` | 修改版本 |
 | DELETE | `/builds/{buildID}` | 删除版本 |
 
-列表：`/projects/{id}/builds`, `/executions/{id}/builds`
+列表：`/projects/{id}/builds`, `/executions/{id}/builds`（无查询参数）
 
-常用字段：`project`, `product`, `execution`, `name`, `date`, `desc`, `builder`, `scmPath`, `filePath`
+**POST 创建**：**executionID**(int), **product**(int), **name**(string), **system**(int), **builder**(string), **date**(date), scmPath(string), filePath(string), desc(string)
+
+**PUT 修改**：同上但字段名为 **execution**(int)（非 executionID）
 
 ---
 
@@ -305,11 +337,13 @@
 | PUT | `/releases/{releasID}` | 修改发布 |
 | DELETE | `/releases/{releasID}` | 删除发布 |
 
-列表：`/products/{id}/releases`
+列表：`/products/{id}/releases`（无查询参数）
 
-常用字段：`product`, `build`, `name`, `date`, `desc`, `stories`, `bugs`
+**POST 创建**：**productID**(int), **system**(int), **name**(string), **build**(string[]), **date**(date), status(`wait`|`normal`|`fail`|`terminate`), desc(string)
 
-> 注意：路径参数名为 `releasID`（非 releaseID）
+**PUT 修改**：productID 不再必填，其余同上
+
+> 路径参数名为 `releasID`（非 releaseID）
 
 ---
 
@@ -321,9 +355,11 @@
 | PUT | `/testtasks/{testtaskID}` | 修改测试单 |
 | DELETE | `/testtasks/{testtaskID}` | 删除测试单 |
 
-列表：`/products/{id}/testtasks`, `/projects/{id}/testtasks`, `/executions/{id}/testtasks`
+列表：`/products/{id}/testtasks`, `/projects/{id}/testtasks`, `/executions/{id}/testtasks`（无查询参数）
 
-常用字段：`project`, `product`, `execution`, `build`, `name`, `type`(integrate), `owner`, `pri`, `begin`, `end`, `desc`
+**POST 创建**：**productID**(int), **name**(string), **build**(int), **begin**(date), **end**(date), execution(int), type(string[] `integrate`|`system`|`acceptance`|`performance`|`safety`), owner(string), status(`wait`|`doing`|`done`|`blocked`), desc(string)
+
+**PUT 修改**：productID 不再必填，其余同上
 
 ---
 
@@ -340,7 +376,13 @@
 
 列表：`/products/{id}/feedbacks`
 
-常用字段：`product`, `module`, `title`, `type`(story), `desc`, `pri`, `source`, `feedbackBy`, `public`, `notify`
+**POST/PUT**：**product**(int), **title**(string), module(int), type(`story`|`task`|`bug`|`todo`|`advice`|`issue`|`risk`|`opportunity`), desc(string), feedbackBy(string), source(string)
+
+**PUT close 关闭**：**closedReason**(`commented`|`repeat`|`refuse`), comment(string)
+
+**PUT activate 激活**：assignedTo(string), comment(string)
+
+**GET 列表参数**：browseType(`all`|`wait`|`doing`|`toclosed`|`review`|`assigntome`|`openedbyme`，默认`wait`), orderBy(`id`|`title`|`status`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -357,7 +399,15 @@
 
 列表：`/products/{id}/tickets`
 
-常用字段：`product`, `module`, `title`, `type`(code), `desc`, `openedBuild`, `assignedTo`, `deadline`, `pri`
+**POST 创建**：**product**(int), **title**(string), module(int), type(`code`|`data`|`stuck`|`security`|`affair`), desc(string), assignedTo(string), deadline(date), openedBuild(string[])
+
+**PUT 修改**：所有字段可选
+
+**PUT close 关闭**：**closedReason**(`commented`|`repeat`|`refuse`), **comment**(string)
+
+**PUT activate 激活**：assignedTo(string), comment(string)
+
+**GET 列表参数**：browseType(`all`|`unclosed`|`wait`|`doing`|`done`|`finishedbyme`|`assigntome`|`openedbyme`，默认`wait`), orderBy(`id`|`title`|`status`+`_asc/_desc`), recPerPage, pageID
 
 ---
 
@@ -368,7 +418,11 @@
 | POST | `/systems` | 创建应用 |
 | PUT | `/systems/{systemID}` | 修改应用 |
 
-列表：`/products/{id}/systems`
+列表：`/products/{id}/systems`（无查询参数）
+
+**POST 创建**：**productID**(int), **integrated**(int, 0=否 1=是), **children**(string[], 非集成传[]), **name**(string), desc(string)
+
+**PUT 修改**：**name**(string), **children**(string[]), desc(string)
 
 ---
 
@@ -378,3 +432,5 @@
 |------|------|------|
 | POST | `/files` | 编辑附件名称 |
 | DELETE | `/files/{fileID}` | 删除附件 |
+
+**POST**：**fileName**(string)
