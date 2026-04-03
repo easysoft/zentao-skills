@@ -10,7 +10,7 @@
 
 ## 快速开始
 
-你可以在 OpenClaw、Cursor、Claude Code 等工具中使用。
+你可以在 OpenClaw、Cursor、Claude Code、Codex 等工具中使用。
 
 下面以 🦀 **OpenClaw** 为例：
 
@@ -33,6 +33,12 @@
     把某个需求状态更新为已关闭，并备注原因
     ```
 
+通过 skills 安装：
+
+```sh
+npx skills add easysoft/zentao-skills
+```
+
 在其他工具中使用参考：
 
 <details>
@@ -52,6 +58,19 @@
   <summary>Claude</summary>
   <ol>
     <li>将 `skills` 目录合并到 `～/.claude/skills`</li>
+    <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
+    <li>在对话中直接提出你的需求，例如：</li>
+    <ul>
+      <li>“查询某项目本周新增 Bug 列表，并按严重程度分组”</li>
+      <li>“把某个需求状态更新为已关闭，并备注原因”</li>
+    </ul>
+  </ol>
+</details>
+
+<details>
+  <summary>Codex</summary>
+  <ol>
+    <li>将 `skills` 目录合并到 `～/.codex/skills`</li>
     <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
     <li>在对话中直接提出你的需求，例如：</li>
     <ul>
