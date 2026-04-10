@@ -1,6 +1,7 @@
 # 禅道 Skills
 
-> ⚠️ 说明：当前技能仍处于实验阶段。请谨慎使用，并**强烈建议对 AI 发起的 API 调用进行人工审核**。
+> [!WARNING]
+> ⚠️ 当前技能仍处于实验阶段。请谨慎使用，并**强烈建议对 AI 发起的 API 调用进行人工审核**。
 
 ## 这是什么
 
@@ -43,41 +44,35 @@ npx skills add easysoft/zentao-skills
 
 <details>
   <summary>Cursor</summary>
-  <ol>
-    <li>将 `skills` 目录合并到 `～/.cursor/skills`</li>
-    <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
-    <li>在对话中直接提出你的需求，例如：</li>
-    <ul>
-      <li>“查询某项目本周新增 Bug 列表，并按严重程度分组”</li>
-      <li>“把某个需求状态更新为已关闭，并备注原因”</li>
-    </ul>
-  </ol>
+
+- 将 `skills` 目录合并到 `～/.cursor/skills`
+- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
+- 在对话中直接提出你的需求，例如：
+  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
+  - “把某个需求状态更新为已关闭，并备注原因”
+
 </details>
 
 <details>
   <summary>Claude</summary>
-  <ol>
-    <li>将 `skills` 目录合并到 `～/.claude/skills`</li>
-    <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
-    <li>在对话中直接提出你的需求，例如：</li>
-    <ul>
-      <li>“查询某项目本周新增 Bug 列表，并按严重程度分组”</li>
-      <li>“把某个需求状态更新为已关闭，并备注原因”</li>
-    </ul>
-  </ol>
+
+- 将 `skills` 目录合并到 `～/.claude/skills`
+- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
+- 在对话中直接提出你的需求，例如：
+  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
+  - “把某个需求状态更新为已关闭，并备注原因”
+
 </details>
 
 <details>
   <summary>Codex</summary>
-  <ol>
-    <li>将 `skills` 目录合并到 `～/.codex/skills`</li>
-    <li>按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）</li>
-    <li>在对话中直接提出你的需求，例如：</li>
-    <ul>
-      <li>“查询某项目本周新增 Bug 列表，并按严重程度分组”</li>
-      <li>“把某个需求状态更新为已关闭，并备注原因”</li>
-    </ul>
-  </ol>
+
+- 将 `skills` 目录合并到 `～/.codex/skills`
+- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
+- 在对话中直接提出你的需求，例如：
+  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
+  - “把某个需求状态更新为已关闭，并备注原因”
+
 </details>
 
 ## 鉴权与 Token 获取
