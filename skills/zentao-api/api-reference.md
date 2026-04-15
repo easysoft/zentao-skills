@@ -160,7 +160,7 @@
 
 列表通过父资源获取：`/products/{id}/stories`, `/projects/{id}/stories`, `/executions/{id}/stories`
 
-**POST 创建**：**productID**(int), **title**(string), pri(int, 默认3), module(int), parent(int), estimate(float), spec(string 需求描述), category(`feature`|`interface`|`performance`|`safe`|`experience`|`improve`|`other`), source(`customer`|`user`|`po`|`market`|`service`|`operation`|`support`|`competitor`|`partner`|`dev`|`tester`|`bug`|`forum`|`other`), verify(string 验收标准), assignedTo(string), reviewer(string[]), project(int), execution(int)
+**POST 创建**：**productID**(int), **title**(string), grade(int 需求层级，建议显式传入), pri(int, 默认3), module(int), parent(int), estimate(float), spec(string 需求描述), category(`feature`|`interface`|`performance`|`safe`|`experience`|`improve`|`other`), source(`customer`|`user`|`po`|`market`|`service`|`operation`|`support`|`competitor`|`partner`|`dev`|`tester`|`bug`|`forum`|`other`), verify(string 验收标准), assignedTo(string), reviewer(string[]), project(int), execution(int)
 
 **PUT 修改**：**title**(string)，其余字段可选
 
@@ -171,6 +171,8 @@
 **PUT activate 激活**：assignedTo(string), comment(string)
 
 **GET 列表参数**：browseType(`allstory`|`assignedtome`|`openedbyme`|`reviewbyme`|`draftstory`，默认`unclosed`), orderBy(`id`|`title`|`status`+`_asc/_desc`), recPerPage, pageID
+
+**建议**：创建 Story / Epic / Requirement 时显式传 `grade`，不要依赖接口默认值；在某些禅道实例中，不传 `grade` 可能会把需求层级写成 `0`。
 
 ---
 
@@ -189,6 +191,8 @@
 列表：`/products/{id}/epics`
 
 字段结构同 Story，差异：无 project/execution 字段，parent 指父业务需求。
+
+**POST 创建建议**：沿用 Story 的字段结构，并显式传 `grade`。典型 BR 场景可传 `grade: 1`。
 
 **GET 列表参数**：同 Story
 
@@ -209,6 +213,8 @@
 列表：`/products/{id}/requirements`
 
 字段结构同 Story，差异：无 project/execution 字段，change 操作中 reviewer 为可选（非必填）。
+
+**POST 创建建议**：沿用 Story 的字段结构，并显式传 `grade`。典型 UR 场景可传 `grade: 1`。
 
 **GET 列表参数**：同 Story
 
