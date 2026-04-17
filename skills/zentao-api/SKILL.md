@@ -97,7 +97,23 @@ curl -s "$ZENTAO_URL/api.php/v2/projects/{projectID}/executions?browseType=doing
 ```bash
 curl -s -X POST "$ZENTAO_URL/api.php/v2/stories" \
   -H "token: $ZENTAO_TOKEN" -H "Content-Type: application/json" \
-  -d '{"productID": 1, "title": "需求标题", "pri": 3, "assignedTo": "admin", "spec": "需求描述"}'
+  -d '{"productID": 1, "title": "需求标题", "grade": 1, "pri": 3, "assignedTo": "admin", "spec": "需求描述"}'
+```
+
+### 创建业务需求（Epic）
+
+```bash
+curl -s -X POST "$ZENTAO_URL/api.php/v2/epics" \
+  -H "token: $ZENTAO_TOKEN" -H "Content-Type: application/json" \
+  -d '{"productID": 1, "title": "业务需求标题", "grade": 1, "pri": 3, "reviewer": ["admin"]}'
+```
+
+### 创建用户需求（Requirement）
+
+```bash
+curl -s -X POST "$ZENTAO_URL/api.php/v2/requirements" \
+  -H "token: $ZENTAO_TOKEN" -H "Content-Type: application/json" \
+  -d '{"productID": 1, "title": "用户需求标题", "parent": 1001, "grade": 1, "pri": 3, "reviewer": ["admin"]}'
 ```
 
 ### 创建 Bug（必填：productID, title, openedBuild）
@@ -192,6 +208,7 @@ curl -s -X PUT "$ZENTAO_URL/api.php/v2/stories/{storyID}/close" \
 ## 注意事项
 
 - URL 中的 `{id}` 需替换为实际 ID；不知道 ID 时先调列表接口获取
+- **创建 Epic / Requirement / Story 时，建议始终显式传 `grade`，不要依赖接口默认值。** 已有用户反馈某些禅道实例在未传 `grade` 时会把需求层级写成 `0`，导致界面中 BR / UR / SR 标签显示异常。
 - **PUT 编辑接口**：先 GET 详情获取当前完整数据，再将用户修改的字段覆盖进去一并提交
 - **状态流转操作** (resolve/close/activate/start/finish/change) 通常有独立的必填字段，不需要先 GET 详情
 - 写操作前向用户确认，用户明确要求不确认则直接执行
