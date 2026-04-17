@@ -1,96 +1,31 @@
 # 禅道 Skills
 
+本仓库提供了禅道相关技能，帮助你在你常用的智能工具中通过 Skill 更好的使用禅道。
+
 > [!WARNING]
-> 当前技能仍处于实验阶段。请谨慎使用，并**强烈建议对 AI 发起的 API 调用进行人工审核**。
+> 当前技能仍处于实验阶段。请谨慎使用，并**强烈建议对 AI 发起的操作（包括 API 调用）进行人工审核**。
 
-## 这是什么
+## 技能列表
 
-本仓库提供基于 [禅道 RESTful API 2.0](https://www.zentao.net/book/api/2309.html) 的 AI Skills。
+|      技能    ｜   简介      |
+| ------------ | --- |
+| `zentao-cli` | 通过 zentao 命令行工具查询和操作禅道（ZenTao）数据，覆盖项目集、产品、项目、执行、需求、Bug、任务、测试用例、测试单、产品计划、版本、发布、反馈、工单、应用、用户、附件等模块的增删改查及状态流转。 |
+| `zentao-api` | 调用禅道（ZenTao）RESTful API v2.0 完成用户请求，覆盖项目集、产品、项目、执行、需求（Story/Epic/Requirement）、Bug、任务、测试用例、测试单、产品计划、版本、发布、反馈、工单、应用、用户、文件等 20 个模块的增删改查及状态流转操作。 |
 
-- **当前包含**：`skills/zentao-api/`（查询并操作禅道数据，如项目、执行、需求、Bug、任务、用例等，取决于接口覆盖范围）
+## 安装 Skills
 
-## 快速开始
+现代智能工具都支持自动安装 Skills，只需要将 https://github.com/easysoft/zentao-skills 链接发送给智能工具，剩下的安装提示操作即可安装，下面是可供参考的提示词：
 
-你可以在 OpenClaw、Cursor、Claude Code、Codex 等工具中使用。
+```txt
+帮我安装 https://github.com/easysoft/zentao-skills 上的技能，可以通过 `npx skills add easysoft/zentao-skills` 来进行安装。
+```
 
-下面以 🦀 **OpenClaw** 为例：
-
-1. 在终端执行 `npx clawhub@latest install zentao-api`，或者将如下内容发送给 OpenClaw 会话：
-
-    ```txt
-    执行命令 `npx clawhub@latest install zentao-api` 安装禅道 API Skill
-    ```
-
-    另一种方式是手动将 `skills` 目录合并到 `~/.openclaw/workspace/skills` 目录。
-
-2. 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
-3. 在对话中直接提出你的需求，例如：
-
-    ```txt
-    查询某项目本周新增 Bug 列表，并按严重程度分组
-    ```
-
-    ```txt
-    把某个需求状态更新为已关闭，并备注原因
-    ```
-
-通过 skills 安装：
+你也可以手动安装，在有 npm 环境的情况下执行如下命令即可安装：
 
 ```sh
 npx skills add easysoft/zentao-skills
 ```
 
-在其他工具中使用参考：
+## 许可证
 
-<details>
-  <summary>Cursor</summary>
-
-- 将 `skills` 目录合并到 `～/.cursor/skills`
-- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
-- 在对话中直接提出你的需求，例如：
-  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
-  - “把某个需求状态更新为已关闭，并备注原因”
-
-</details>
-
-<details>
-  <summary>Claude</summary>
-
-- 将 `skills` 目录合并到 `～/.claude/skills`
-- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
-- 在对话中直接提出你的需求，例如：
-  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
-  - “把某个需求状态更新为已关闭，并备注原因”
-
-</details>
-
-<details>
-  <summary>Codex</summary>
-
-- 将 `skills` 目录合并到 `～/.codex/skills`
-- 按下文“鉴权与 Token 获取”准备好服务器地址与 Token（或账号密码）
-- 在对话中直接提出你的需求，例如：
-  - “查询某项目本周新增 Bug 列表，并按严重程度分组”
-  - “把某个需求状态更新为已关闭，并备注原因”
-
-</details>
-
-## 鉴权与 Token 获取
-
-技能会按以下顺序尝试获取禅道服务器地址与 Token：
-
-- **优先**：从缓存文件 `~/.zentao-token.json` 读取服务器地址与 Token，如果有用户名也会读取用户名
-- **其次**：从环境变量读取服务器地址、Token 和用户名
-- **再次**：若仍缺少 Token，则从环境变量读取账号密码并调用 `scripts/get-token.sh` 动态获取 Token
-- **兜底**：若以上信息都缺失，会提示你提供禅道服务器地址、账号与密码以完成鉴权
-- **缓存**：成功获取 Token 后会将服务器地址、Token 和用户名写入 `~/.zentao-token.json`，方便下次直接使用
-
-## 注意事项
-
-- **安全**：请不要将 `~/.zentao-token.json`、环境变量、账号密码粘贴到公开渠道；建议仅在本机受控环境使用。
-- **Token**：禅道 Token 通常为长期有效；如 Token 失效或需要切换账号/服务器，可让 AI 清除本地缓存后重新获取。
-- **覆盖范围**：当前不保证覆盖禅道全部模块接口；会随禅道 API 2.0 支持情况逐步补齐。
-
-## 常见问题
-
-- **如何清除缓存？**：删除 `~/.zentao-token.json`（或让 AI 帮你执行清理），再重新发起一次需要鉴权的请求即可。
+[MIT](./LICENSE)
