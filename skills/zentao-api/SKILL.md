@@ -5,7 +5,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-skills.git
   keywords: [zentao, 禅道, api, project-management]
-  version: 1.0.3
+  version: 1.0.4
 ---
 
 # 禅道 API v2.0
