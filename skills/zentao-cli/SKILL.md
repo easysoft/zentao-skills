@@ -6,7 +6,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-cli.git
   keywords: [zentao, 禅道, cli, project-management]
-  version: 0.1.2-beta.4
+  version: 0.1.2-beta.5
 ---
 
 # 禅道 CLI
@@ -134,17 +134,6 @@ zentao bug 42                           # 查看具体 Bug
 ### 写操作前确认
 
 执行创建、更新、删除等写操作前，先向用户确认操作内容。用户明确要求不确认时可跳过。
-
-## 工作区
-
-工作区记住当前产品、项目、执行上下文，后续命令自动关联，无需重复传参：
-
-```bash
-zentao workspace set --execution=4      # 自动设置所属项目和产品
-zentao bug                              # 自动使用工作区中的产品
-zentao task                             # 自动使用工作区中的执行
-zentao workspace                        # 查看当前工作区
-```
 
 ## 数据处理
 
