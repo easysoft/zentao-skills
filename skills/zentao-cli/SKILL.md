@@ -6,7 +6,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-cli.git
   keywords: [zentao, 禅道, cli, project-management]
-  version: 0.1.2
+  version: 0.1.4
 ---
 
 # 禅道 CLI
@@ -247,13 +247,12 @@ zentao help              # 查看所有命令
 | E1004 | Token 失效 | 执行 `zentao login` 重新登录 |
 | E2001 | 模块不存在 | 执行 `zentao help` 查看可用模块 |
 | E2002 | 对象不存在 | 检查 ID 是否正确 |
-| E2003 | 缺少必要参数 | 执行 `zentao <module> help` 查看参数 |
+| E2003 | 缺少必要参数 | 执行 `zentao <module> help` 或 `zentao <module> <action> help` 查看操作参数 |
 | E2006 | 无权限 | 提示用户检查权限 |
 | E5001 | 请求超时 | 检查网络或禅道服务状态 |
 
 ## 注意事项
 
-- 不确定模块参数时，先执行 `zentao <module> help` 查看帮助
+- 不确定模块参数时，先执行 `zentao <module> help` 查看帮助，不确定操作参数时，先执行 `zentao <module> <action> help` 查看帮助
 - `browseType` 常用值：`all`（全部）、`doing`（进行中）、`closed`（已关闭）
-- 静默模式：`--silent` 只输出错误信息
 - 多账号切换：`zentao profile` 查看和切换账号
