@@ -1,5 +1,7 @@
 # 禅道 Skills
 
+![ZenTao Skills](./assets/zentao-skills-cover.png)
+
 本仓库提供了禅道相关技能，帮助你在你常用的智能工具中通过 Skill 更好的使用禅道。
 
 > [!WARNING]
