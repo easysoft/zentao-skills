@@ -6,7 +6,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-cli.git
   keywords: [zentao, 禅道, cli, project-management]
-  version: 0.1.4
+  version: 0.1.6
 ---
 
 # 禅道 CLI
@@ -44,6 +44,11 @@ zentao login -s https://zentao.example.com -u admin -p 123456
 | `ZENTAO_TOKEN` | 直接指定 Token（有此变量可省略密码） |
 
 登录成功后凭证缓存在 `~/.config/zentao/zentao.json`，后续无需重复登录。
+
+### 凭证安全
+
+- 用户尚未登录时，不要在对话里收集账号密码。让用户直接在终端执行 `zentao login`，或执行任意 `zentao` 命令触发首次自动登录提示，由用户自行输入凭证。
+- 严禁读取本地凭证：`ZENTAO_PASSWORD` / `ZENTAO_TOKEN` 环境变量、`~/.config/zentao/zentao.json` 配置文件。所有禅道数据均通过 `zentao` 命令获取，凭证由 CLI 内部处理。
 
 ## 命令格式
 
