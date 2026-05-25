@@ -6,7 +6,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-cli.git
   keywords: [zentao, 禅道, cli, project-management]
-  version: 0.1.6
+  version: 0.1.7
 ---
 
 # 禅道 CLI
@@ -139,6 +139,10 @@ zentao bug 42                           # 查看具体 Bug
 ### 写操作前确认
 
 执行创建、更新、删除等写操作前，先向用户确认操作内容。用户明确要求不确认时可跳过。
+
+### 更新操作自动补全
+
+执行 `update` 时，CLI 会先 GET 当前对象，把用户未显式传入的字段用现值填充后再 PUT，避免禅道 PUT 覆盖未提交字段导致清空。因此只需传想改的字段即可，无需手动先查再传完整参数。
 
 ## 数据处理
 
