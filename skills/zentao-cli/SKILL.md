@@ -6,7 +6,7 @@ metadata:
   author: Sun Hao <sunhao@chandao.com>
   repository: https://github.com/easysoft/zentao-cli.git
   keywords: [zentao, 禅道, cli, project-management]
-  version: 0.1.7
+  version: 0.1.8
 ---
 
 # 禅道 CLI
@@ -65,6 +65,17 @@ zentao login -s https://zentao.example.com -u admin -p 123456
 | 帮助 | `zentao <module> help` |
 
 也支持 `--data='JSON'` 传入 JSON 数据。
+
+### 图片嵌入
+
+创建 story/bug 时，内容字段（`--spec`、`--verify`、`--steps`）支持 `![描述](本地路径)` 语法引用本地图片，CLI 会自动上传到禅道并替换为图片链接：
+
+```bash
+zentao story create --productID=1 --title="带截图的需求" \
+  --spec='界面问题 ![截图](/tmp/screenshot.png) 如上图所示'
+```
+
+支持绝对路径、`~` 路径和相对路径（相对于当前工作目录）。
 
 ## 模块与操作速查
 
@@ -258,6 +269,7 @@ zentao help              # 查看所有命令
 | E2002 | 对象不存在 | 检查 ID 是否正确 |
 | E2003 | 缺少必要参数 | 执行 `zentao <module> help` 或 `zentao <module> <action> help` 查看操作参数 |
 | E2006 | 无权限 | 提示用户检查权限 |
+| E2011 | 图片文件不存在 | 检查 `![描述](路径)` 中的文件路径是否正确 |
 | E5001 | 请求超时 | 检查网络或禅道服务状态 |
 
 ## 注意事项
