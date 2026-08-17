@@ -182,6 +182,43 @@ zentao bug --product=1 --all            # 获取全部
 zentao bug --product=1 --limit=10       # 只取前 10 条
 ```
 
+### 读取 Bug / 需求正文里的图片附件
+
+当 Bug、需求、反馈、工单等正文里出现如下图片引用时：
+
+```md
+![... ](/index.php?m=file&f=read&t=png&fileID=124)
+```
+
+不要直接用 `curl <server>/index.php?m=file&f=read...` 下载。该网页端地址通常依赖浏览器 Cookie，CLI 的 API 认证态不一定可用，直接访问可能返回登录 HTML，而不是真正的图片。
+
+处理流程：
+
+1. 先用详情接口读取对象正文，例如：
+
+```bash
+zentao bug 33 --format=json
+```
+
+2. 从正文中提取 `fileID`，例如 `124`、`126`、`127`。
+
+3. 优先使用禅道 REST API 文件端点读取附件：
+
+```text
+/api.php/v1/files/<fileID>
+```
+
+该端点通常返回 `application/octet-stream`。保存到本地后，必须用 `file`、PIL 或图片查看器验证真实格式，不要只根据扩展名判断。
+
+4. 严禁读取本地凭证：`ZENTAO_PASSWORD` / `ZENTAO_TOKEN` 环境变量、`~/.config/zentao/zentao.json` 配置文件。认证必须通过 `zentao` CLI 已登录上下文或 CLI/MCP 暴露的安全请求能力复用。
+
+5. 如果当前 CLI 版本的 `zentao file help` 只支持编辑/删除，不支持 `get` / `download` / `read`，不要误判为附件不存在；这是 CLI 能力缺口。可说明当前需要通过 API 文件端点读取，或建议 CLI 后续补齐：
+
+```bash
+zentao file get <fileID>
+zentao file download <fileID> -o <path>
+```
+
 ## 常用操作示例
 
 ### 查看进行中的项目和执行
