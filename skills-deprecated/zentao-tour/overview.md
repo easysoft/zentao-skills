@@ -1,6 +1,6 @@
 # 禅道与 zentao-cli 速览
 
-本文档服务于 [SKILL.md](SKILL.md) 的 "第 1 步"，用于向用户快速介绍禅道与 zentao-cli，并完成工具就绪检查。
+本文档服务于 [ARCHIVED.md](ARCHIVED.md) 的 "第 1 步"，用于向用户快速介绍禅道与 zentao-cli，并完成工具就绪检查。
 
 ## 什么是禅道
 
@@ -42,7 +42,7 @@ flowchart LR
 - 对 AI 友好：默认输出 Markdown 表格便于阅读，加 `--format=json` 可获取结构化数据
 - 内置过滤、排序、分页、模糊搜索、字段摘取
 
-更多命令细节见 [zentao-cli 技能文档](../zentao-cli/SKILL.md)。
+更多命令细节见 [zentao-cli 技能文档](../../skills/zentao-cli/SKILL.md)。
 
 ## 两种接入方式
 
@@ -104,7 +104,7 @@ zentao product --pick=id,name               # 能正常拉取产品列表
 - 命令找不到（`command not found`）→ 回到上文"方式一"安装
 - 网络错误 / `E5001` → 检查禅道服务地址是否正确、网络是否可达
 
-通了之后回到 SKILL.md，顺势问用户想从哪个角色切入就好。
+通了之后回到 ARCHIVED.md，顺势问用户想从哪个角色切入就好。
 
 ## 外部资料
 

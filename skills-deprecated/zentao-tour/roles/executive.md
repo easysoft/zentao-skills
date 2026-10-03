@@ -77,7 +77,7 @@ zentao ticket --product=<id> --pick=id,title,status,pri
 
 ## 自然收尾
 
-- 用户满足了——用一句话回顾他看过的那一两个维度，然后回到 [../SKILL.md](../SKILL.md) 的收尾流程。
+- 用户满足了——用一句话回顾他看过的那一两个维度，然后回到 [../ARCHIVED.md](../ARCHIVED.md) 的收尾流程。
 - 用户问起操作类的事（比如"这条 Bug 谁来解"）——说"这就得换开发视角 / 项目经理视角了"，邀请切换。
 
 ## 查询速查（给 AI 用）

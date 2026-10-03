@@ -10,6 +10,8 @@ metadata:
 
 # 禅道 API v2.0
 
+> 本文为历史归档，不再维护或用于安装。当前请使用 [zentao-cli 技能](../../skills/zentao-cli/SKILL.md)，安装方法见[仓库说明](../../README.md#安装-skills)。
+
 ## 配置
 
 优先级从高到低：

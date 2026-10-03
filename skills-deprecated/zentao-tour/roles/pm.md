@@ -128,7 +128,7 @@ zentao story --productID=<产品ID> --pick=id,title,pri,plan
 - "其实禅道里还有 `epic` 和 `requirement`，是给更上层战略抽象用的，以后你团队大了会用得上。"
 - "或者 `release`，产品真要上线那天它会登场。"
 
-然后回到 [../SKILL.md](../SKILL.md) 的收尾流程，询问是否换个身份或清理演示数据。
+然后回到 [../ARCHIVED.md](../ARCHIVED.md) 的收尾流程，询问是否换个身份或清理演示数据。
 
 ## 写操作速查（给 AI 用）
 

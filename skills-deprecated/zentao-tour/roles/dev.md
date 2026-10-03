@@ -70,7 +70,7 @@ zentao bug resolve <id> --resolution=fixed
 
 - 用户问"测试那边怎么再验"——指测试视角。
 - 用户满足地表示够了——简短回顾："你认领了一个任务、把它从 wait 推到了 done，还顺手解了一个 Bug。"
-- 回到 [../SKILL.md](../SKILL.md) 的收尾流程。
+- 回到 [../ARCHIVED.md](../ARCHIVED.md) 的收尾流程。
 
 ## 写操作速查（给 AI 用）
 
