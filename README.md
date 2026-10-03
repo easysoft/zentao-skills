@@ -18,16 +18,98 @@
 
 ## 安装 Skills
 
-现代智能工具都支持自动安装 Skills，只需要将 https://github.com/easysoft/zentao-skills 链接发送给智能工具，剩下的安装提示操作即可安装，下面是可供参考的提示词：
+### 选择使用的 AI 工具
 
-```txt
-帮我安装 https://github.com/easysoft/zentao-skills 上的技能，可以通过 `npx skills add easysoft/zentao-skills` 来进行安装。
-```
-
-你也可以手动安装，在有 npm 环境的情况下执行如下命令即可安装：
+先准备好 Node.js（包含 npm 和 npx）与 Git，在终端执行与你使用的工具对应的命令：
 
 ```sh
-npx skills add easysoft/zentao-skills
+# Codex
+npx skills add easysoft/zentao-skills --skill zentao-cli -a codex -g
+
+# Claude Code
+npx skills add easysoft/zentao-skills --skill zentao-cli -a claude-code -g
+
+# Cursor
+npx skills add easysoft/zentao-skills --skill zentao-cli -a cursor -g
+```
+
+`-g` 表示安装到当前用户，供多个项目使用。如果只想在某个项目中使用，请先进入该项目目录，再去掉命令中的 `-g`。`--skill zentao-cli` 指定安装的技能，`-a` 指定使用它的 AI 工具。
+
+其他工具可以通过交互提示选择，支持范围见 [skills 官方文档](https://github.com/vercel-labs/skills)：
+
+```sh
+npx skills add easysoft/zentao-skills --skill zentao-cli -g
+```
+
+也可以把下面的提示词发给支持执行终端命令的 AI 工具：
+
+```txt
+请使用 npx skills add easysoft/zentao-skills --skill zentao-cli -g，
+为我当前使用的 AI 工具安装禅道技能。
+```
+
+本文的 `npx skills` 命令从本仓库安装和更新技能。ZenTao CLI 提供的 `zentao add-skill <agent>` 则安装该 CLI 版本随附的技能，内容可能不同。通过本页命令安装的技能，请使用下方 `npx skills update` 命令更新；更新前请保留自己的定制内容。
+
+### 准备 ZenTao CLI 并登录
+
+技能通过 `zentao` 命令访问禅道。先检查是否已经安装：
+
+```sh
+zentao --version
+```
+
+如果提示找不到命令，再安装 [ZenTao CLI](https://github.com/easysoft/zentao-cli)：
+
+```sh
+npm install -g zentao-cli
+```
+
+首次使用时，在自己的交互终端中执行登录，按提示填写站点与账号信息；已有可用登录配置时可以跳过。密码和 Token 请在终端中输入，不要发到 AI 对话中。
+
+```sh
+zentao login
+```
+
+登录后执行一次只读查询，确认当前账号能够访问禅道：
+
+```sh
+zentao my todos
+```
+
+查询成功但没有待办也属正常。随后可以在 AI 工具中说：“使用 zentao-cli 技能查询我的待办。”
+
+### 查看、更新和卸载
+
+以下命令对应上面的用户级安装；查看和卸载以 Codex 为例，其他工具替换 `-a` 后的名称即可：
+
+```sh
+# 查看已安装的技能
+npx skills list -a codex -g
+
+# 更新通过 skills 安装的 zentao-cli 技能
+npx skills update zentao-cli -g
+
+# 从 Codex 卸载技能
+npx skills remove zentao-cli -a codex -g
+```
+
+如果使用项目级安装，请在原项目目录执行命令：查看和卸载去掉 `-g`，更新时将 `-g` 换成 `-p`。更新技能不会更新 ZenTao CLI 程序；升级 CLI 请按其[官方说明](https://github.com/easysoft/zentao-cli)操作。
+
+### 常见问题
+
+| 情况 | 处理方式 |
+| --- | --- |
+| 找不到 `npx` 或 `git` | 安装 Node.js 或 Git 后，重新打开终端。 |
+| 无法从 GitHub 下载 | 确认网络能访问 GitHub，再重试安装命令。 |
+| 技能已安装但 AI 工具没有加载 | 用 `skills list` 检查工具和安装范围；项目级技能需要打开对应项目。必要时新建对话或重启工具。 |
+| 创建符号链接失败 | 在安装命令末尾加上 `--copy`，改用文件复制。 |
+| 提示找不到 `zentao` | 安装 ZenTao CLI，并确认其命令位于终端的 PATH 中。 |
+| 查询提示未登录或凭证失效 | 在自己的终端重新执行 `zentao login`；无业务权限时联系站点管理员。 |
+
+安装前只想查看本仓库提供的技能，可以执行：
+
+```sh
+npx skills add easysoft/zentao-skills --list
 ```
 
 ## 使用示例
