@@ -1,0 +1,5 @@
+interface:
+  display_name: "禅道CLI"
+  short_description: "查询与维护禅道产品、项目、需求、任务和 Bug，执行状态流转并汇总进展"
+  icon_small: "./assets/pixel-tao-terminal-blue-flat.svg"
+  icon_large: "./assets/pixel-tao-terminal-blue-512.png"

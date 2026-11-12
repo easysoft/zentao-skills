@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title desc" shape-rendering="crispEdges">
+  <title id="title">ZenTao CLI — Pixel Tao Terminal Blue Flat</title>
+  <desc id="desc">A flat terminal navy optical-size version of the Pixel Tao mark for use at 32 pixels and below.</desc>
+  <path fill="#0B3A59" transform="scale(6.25)" d="
+    M6 1h4v1H6z M4 2h8v1H4z M3 3h10v1H3z
+    M2 4h2v1H2z M9 4h5v1H9z
+    M2 5h1v1H2z M4 5h2v1H4z M10 5h4v1h-4z
+    M1 6h5v1H1z M11 6h4v1h-4z
+    M1 7h4v1H1z M6 7h4v1H6z M13 7h2v1h-2z
+    M1 8h3v1H1z M5 8h3v1H5z M10 8h5v1h-5z
+    M1 9h3v1H1z M5 9h2v1H5z M8 9h1v1H8z M11 9h4v1h-4z
+    M2 10h2v1H2z M5 10h5v1H5z M11 10h3v1h-3z
+    M2 11h2v1H2z M6 11h3v1H6z M11 11h3v1h-3z
+    M3 12h2v1H3z M10 12h3v1h-3z
+    M4 13h8v1H4z M6 14h4v1H6z
+  "/>
+</svg>
